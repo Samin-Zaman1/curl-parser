@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "cors": "^2.8.5",
     "curl-to-postmanv2": "^1.8.1",
     "express": "^4.21.2",
     "express-rate-limit": "^7.5.0",
