@@ -82,3 +82,13 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+// add api to add dummy cookie
+app.get("/set-cookie", (req, res) => {
+  res.cookie("cookieName", "cookieValue", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "strict",
+  });
+  res.send("Cookie set successfully");
+});
