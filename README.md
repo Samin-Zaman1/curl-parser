@@ -9,10 +9,17 @@ This API provides cURL command parsing functionality and sample CRUD operations 
 npm install
 
 # Start the server
-npm start
+node index.js
 ```
 
 The server runs on http://localhost:5000 by default.
+
+## Technical Details
+
+- Built with Node.js and Express
+- Uses ES modules (import/export) syntax
+- Includes validation with Joi
+- Handles various content types (JSON, form data, binary, XML)
 
 ## Available Endpoints
 

@@ -1,13 +1,19 @@
-const express = require("express");
-const helmet = require("helmet");
-const rateLimit = require("express-rate-limit");
-const Joi = require("joi");
+import express from "express";
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
+import Joi from "joi";
 // const converter = require("curl-to-postmanv2");
-const curlconverter = require("curlconverter");
-const cors = require("cors");
-const xml2js = require("xml2js");
-const fs = require("fs");
-const multer = require("multer");
+import * as curlconverter from "curlconverter";
+import cors from "cors";
+import xml2js from "xml2js";
+import fs from "fs";
+import multer from "multer";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+
+// Get current file path (ES module equivalent of __dirname)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const app = express();
 // need to use cors to allow call from any origin
