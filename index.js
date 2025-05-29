@@ -10,6 +10,12 @@ import fs from "fs";
 import multer from "multer";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
+import cookieParser from "cookie-parser";
+
+const userName = "admin";
+const password = "Admin123!";
+const COOKIE_NAME = "auth_token";
+const COOKIE_VALUE = "secure_auth_token";
 
 // Get current file path (ES module equivalent of __dirname)
 const __filename = fileURLToPath(import.meta.url);
@@ -21,7 +27,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(helmet());
 app.use(cors());
-
+app.use(cookieParser());
 // For handling binary files
 const upload = multer({ dest: "uploads/" });
 
@@ -226,6 +232,33 @@ app.post("/api/xml", xmlParser, (req, res) => {
       error: error.message,
     });
   }
+});
+
+app.post("/login", (req, res) => {
+  if (!req.body?.username || !req.body?.password) {
+    return res
+      .status(400)
+      .json({ message: "Username and Password is required!" });
+  }
+  const { username, password: pwd } = req.body;
+  if (username === userName && pwd === password) {
+    res.cookie(COOKIE_NAME, COOKIE_VALUE, { httpOnly: true });
+    return res.json({ message: "Login successful" });
+  }
+  res.status(401).json({ message: "Invalid credentials" });
+});
+
+app.get("/users", (req, res) => {
+  const token = req.cookies[COOKIE_NAME];
+  if (token === COOKIE_VALUE) {
+    return res.json({ data: [{ _id: "1233", name: "test" }] });
+  }
+  res.status(401).json({ message: "Unauthorized" });
+});
+
+app.post("/logout", (req, res) => {
+  res.clearCookie(COOKIE_NAME);
+  res.json({ message: "Logged out successfully" });
 });
 
 // Catch-all route for invalid endpoints
